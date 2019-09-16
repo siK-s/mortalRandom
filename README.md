@@ -1,0 +1,2 @@
+# mortalRandom
+Tirage mortel
