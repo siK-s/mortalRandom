@@ -3,16 +3,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title></title>
+    <title>mortalRandom</title>
 </head>
 <body>
+
+    <header role="banner">
+        <nav role="navigation">
+
+        </nav>
+    </header>
+
+
+    <main role="main">
+        <section id="section-accueil">
+            <input type="button" onclick="affichagePage2()" value="Connexion"></input>
+            <input type="button" onclick="affichagePage3()" value="Inscription"></input>
+            <input type="button" onclick="affichagePage4()" value="Profil"></input>
+            <h1>Accueil</h1>
+        </section>
+
+        <section id="section-connexion">
+            <input type="button" onclick="affichagePage1()" value="Accueil"></input>
+            <input type="button" onclick="affichagePage3()" value="Inscription"></input>
+            <input type="button" onclick="affichagePage4()" value="Profil"></input>
+            <h1>Connexion</h1>
+        </section>
+        
+        <section id="section-inscription">
+            <input type="button" onclick="affichagePage1()" value="Accueil"></input>
+            <input type="button" onclick="affichagePage2()" value="Connexion"></input>
+            <input type="button" onclick="affichagePage4()" value="Profil"></input>
+            <h1>Inscription</h1>
+        </section>
+        
+        <section id="section-profil">
+            <input type="button" onclick="affichagePage1()" value="Accueil"></input>
+            <input type="button" onclick="affichagePage2()" value="Connexion"></input>
+            <input type="button" onclick="affichagePage3()" value="Inscription"></input>
+            <h1>Profil</h1>
+        </section>
+    </main>
+
+    <footer role="contentinfo">
+    
+    </footer>
     
 
-
-
-
-
-
     <script src="js/scripts.js"></script>
+    <script src="js/spa.js"></script>
+    <script>
+        affichagePage1();
+    </script>
 </body>
 </html>
