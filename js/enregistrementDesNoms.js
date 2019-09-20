@@ -19,27 +19,32 @@ let btnRegisterName; // déclaration de la variable du bouton d'enregistrement d
 let fieldsetElt;
 function saveNbEleves(e) {
     nbEleves = findMaxNum(document.getElementById('nbEleves').value);
-    console.log(nbEleves, 'save nb élèves');
-    fieldsetElt = document.createElement('fieldset'); // Création d'un conteneur qui regroupe les input d'enregistrement des noms
-    registerStudiants.appendChild(fieldsetElt); // ajout du fieldset dans le form
-    let legendElt = document.createElement('legend');// creation de la balise legend
-    legendElt.textContent = "Nom des élèves";
-    fieldsetElt.appendChild(legendElt); // ajout de la légende dans la balise fieldset
+    if (nbEleves > 0) {
+        //on desactive le bouton de validation du nombre d'élève
+        saveBtn.disabled = true;
+        
+        console.log(nbEleves, 'save nb élèves');
+        fieldsetElt = document.createElement('fieldset'); // Création d'un conteneur qui regroupe les input d'enregistrement des noms
+        registerStudiants.appendChild(fieldsetElt); // ajout du fieldset dans le form
+        let legendElt = document.createElement('legend');// creation de la balise legend
+        legendElt.textContent = "Nom des élèves";
+        fieldsetElt.appendChild(legendElt); // ajout de la légende dans la balise fieldset
 
-    // Création et ajout des champs de saisi des noms des élèves
-    for (let i = 0; i < nbEleves; i++) {
-        let inputElt = document.createElement('input');
-        inputElt.type = 'text';
-        inputElt.placeholder = "Nom de l'élève";
-        fieldsetElt.appendChild(inputElt);
+        // Création et ajout des champs de saisi des noms des élèves
+        for (let i = 0; i < nbEleves; i++) {
+            let inputElt = document.createElement('input');
+            inputElt.type = 'text';
+            inputElt.placeholder = "Nom de l'élève";
+            fieldsetElt.appendChild(inputElt);
+        }
+        // création et ajout du bouton d'enregistrement
+        btnRegisterName = document.createElement('button');
+        btnRegisterName.id = 'btnRegisterName';
+        btnRegisterName.textContent = 'Enregistrer';
+        fieldsetElt.appendChild(btnRegisterName);
+        document.getElementById('btnRegisterName').addEventListener('click', regisrerNames);
     }
-    // création et ajout du bouton d'enregistrement
-    btnRegisterName = document.createElement('button');
-    btnRegisterName.id = 'btnRegisterName';
-    btnRegisterName.textContent = 'Enregistrer';
-    fieldsetElt.appendChild(btnRegisterName);
-    document.getElementById('btnRegisterName').addEventListener('click', regisrerNames);
-
+    
     e.preventDefault(); // Annulation de l'envoi des données
 }
 // Tableau initial
@@ -49,20 +54,39 @@ let uncalledNames = [];
 let btnSelectName;
 
 function regisrerNames(e) {
-    let names = document.querySelectorAll('fieldset input');
-    console.log(names.length);
-    for (let n = 0; n < names.length; n++) {
-        console.log(names[n].value);
-        uncalledNames[n] = names[n].value;
-    }
-    console.log(uncalledNames, "Tableau des noms après l'enregistrement");
 
-    //Création et ajout du bouton de sélection des noms
-    btnSelectName = document.createElement('button');
-    btnSelectName.id = 'btnSelectName';
-    btnSelectName.textContent = 'Sélectionner un nom';
-    fieldsetElt.appendChild(btnSelectName);
-    document.getElementById('btnSelectName').addEventListener('click', decrementNbEleves);
+    let countValidInput = 0; // variable qui permet de vérifier si les champs sont rempli
+
+    let names = document.querySelectorAll('fieldset input');
+    
+    //On verifie si les champs ne sont pas vide
+    for (let i = 0; i < names.length; i++) {
+        if (names[i].value != "") {
+            countValidInput ++;
+        }
+    }
+    //console.log(countValidInput);
+
+    if (countValidInput === names.length) {
+        // On désactive le bouton d'enregistrement des noms
+        btnRegisterName.disabled = true;
+
+        console.log(names.length);
+        for (let n = 0; n < names.length; n++) {
+            //console.log(names[n].value);
+            uncalledNames[n] = names[n].value;
+        }
+        console.log(uncalledNames, "Tableau des noms après l'enregistrement");
+
+        //Création et ajout du bouton de sélection des noms
+        btnSelectName = document.createElement('button');
+        btnSelectName.id = 'btnSelectName';
+        btnSelectName.textContent = 'Sélectionner un nom';
+        fieldsetElt.appendChild(btnSelectName);
+        document.getElementById('btnSelectName').addEventListener('click', decrementNbEleves);
+    } else {
+        console.log("Tous les champs ne sont pas remplis!")
+    }
 
     e.preventDefault(); // Annulation de l'envoi des données
 }
