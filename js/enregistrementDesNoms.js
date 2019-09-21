@@ -23,7 +23,7 @@ function saveNbEleves(e) {
         //on desactive le bouton de validation du nombre d'élève
         saveBtn.disabled = true;
         
-        console.log(nbEleves, 'save nb élèves');
+        //console.log(nbEleves, 'save nb élèves');
         fieldsetElt = document.createElement('fieldset'); // Création d'un conteneur qui regroupe les input d'enregistrement des noms
         registerStudiants.appendChild(fieldsetElt); // ajout du fieldset dans le form
         let legendElt = document.createElement('legend');// creation de la balise legend
@@ -43,20 +43,20 @@ function saveNbEleves(e) {
         btnRegisterName.textContent = 'Enregistrer';
         fieldsetElt.appendChild(btnRegisterName);
         document.getElementById('btnRegisterName').addEventListener('click', regisrerNames);
+    } else {
+        console.log("Merci de saisir un nombre d'élève");
     }
     
     e.preventDefault(); // Annulation de l'envoi des données
 }
 // Tableau initial
-// let uncalledNames = ["Hadibéré", "Mohammed S", "Sika", "Audrey", "Amel", "Hervé", "Salim", "Mohammed K", "Andréa", "Yannik"];
 let uncalledNames = [];
 // Déclaration de la variable de séléction du nom d'un éléève
 let btnSelectName;
 
 function regisrerNames(e) {
-
     let countValidInput = 0; // variable qui permet de vérifier si les champs sont rempli
-
+    // La variable names permettra de séléctionner tous les champs (input) contenant le nom des éléèves
     let names = document.querySelectorAll('fieldset input');
     
     //On verifie si les champs ne sont pas vide
@@ -71,12 +71,12 @@ function regisrerNames(e) {
         // On désactive le bouton d'enregistrement des noms
         btnRegisterName.disabled = true;
 
-        console.log(names.length);
+        //console.log(names.length);
         for (let n = 0; n < names.length; n++) {
             //console.log(names[n].value);
             uncalledNames[n] = names[n].value;
         }
-        console.log(uncalledNames, "Tableau des noms après l'enregistrement");
+        //console.log(uncalledNames, "Tableau des noms après l'enregistrement");
 
         //Création et ajout du bouton de sélection des noms
         btnSelectName = document.createElement('button');
@@ -85,24 +85,31 @@ function regisrerNames(e) {
         fieldsetElt.appendChild(btnSelectName);
         document.getElementById('btnSelectName').addEventListener('click', decrementNbEleves);
     } else {
-        console.log("Tous les champs ne sont pas remplis!")
+        console.log("Tous les champs doivent être remplis!")
     }
 
     e.preventDefault(); // Annulation de l'envoi des données
 }
 
-// Talbeau des après avoir sélectionné un élève
-let calledNames = [];
+// la variable result permet de selectionner la balise <p> qui affichera le nom de l'élève selectionné
+let result = document.getElementById('result');
 
 function decrementNbEleves(e) {
     if(nbEleves > 0) {
-        console.log(uncalledNames, "Avant d'avoir été appelé");
+        //console.log(uncalledNames, "Avant d'avoir été appelé");
         const index = findIndex(nbEleves);
-        console.log(index, 'index');
-        console.log(uncalledNames[index]);
+        //console.log(index, "index de l'élève qui a été séléctionné");
+        //console.log(uncalledNames[index], Nom de l'élève selectionné);
+        
+        // Affichage du nom de l'élève dans la balise <p>
+        result.textContent = uncalledNames[index];
+
+        // supression du nom de cet élève dans le tableau initial
         uncalledNames.splice(index, 1);
-        console.log(uncalledNames, "Après avoir été appelé");
+        //console.log(uncalledNames, "Après avoir été appelé");
         nbEleves--;
+    } else {
+        console.log("Tous les élèves ont été appelé au moins une fois!");
     }
 
     e.preventDefault(); // Annulation de l'envoi des données
