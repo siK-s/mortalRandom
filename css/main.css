@@ -1,0 +1,100 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #eee;
+    padding: 0;
+    margin: 0;
+}
+header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    background-color: cornflowerblue;
+}
+.iconlogo img {
+    width: 3em;
+}
+h1 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: normal;
+    text-transform: uppercase;
+    color: #fff;
+    margin: 0 auto;
+}
+h1 b { 
+    text-transform: none;
+    font-family: 'Roboto Condensed', sans-serif;
+    color: #000;
+}
+/*** Formulaire */
+#formRegisterStudiants { text-align: center; }
+fieldset {
+    border: 0;
+    text-align: center;
+}
+fieldset legend {
+    margin: 1.5em auto 1em;
+    text-transform: uppercase;
+}
+#registerStudiants {
+    text-align: center;
+}
+#registerStudiants fieldset:nth-child(2) input[type='text'],
+#studiantFieldsetElt input[type='text'] {
+    width: 90%;
+}
+.registerNumStudiants{
+    margin: 0em auto 1em;
+    transition: all .5s;
+    position: relative;
+    opacity: 1;
+    background-color: #000;
+}
+.registerNumStudiants label {
+    display: block;
+    margin: 1em auto;
+    color: #fff;
+}
+input[type='text'] {
+    display: inline-block;
+    margin-bottom: 1em;
+    padding: 1em;
+    border: 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    font-size: 1em;
+    text-align: left;
+}
+input#nbEleves[type='text'] { width: 30%; }
+#saveBtn { 
+    display: inline-block;
+    cursor: pointer;
+}
+#saveBtn, button, input[type='submit'] {
+    padding: 1em;
+    margin: 0em auto;
+    border: none;
+    color: #fff;
+    background-color: cornflowerblue;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    font-size: 1em;
+}
+#result {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #FFF;
+    transition: all .5s;
+}
+#result input[type='submit'] {
+    margin: 3em auto;
+    color: cornflowerblue; 
+    background-color: #FFF;
+}
