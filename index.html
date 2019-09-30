@@ -3,16 +3,69 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title></title>
+    <title>mortalRandom</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <header role="banner"></header>
-<!--numéro du compte à rebours de départ-->
+
+
+    <header role="banner">
+        <nav role="navigation">
+
+        </nav>
+        <<<<<<< HEAD
+
+    </header>
+
+<!-- numéro du compte à rebours de départ
 <div id="numdep">3</div>
-<div id="noms"></div>
+<div id="noms"></div> -->
+    <main role="main">
+        <section id="section-accueil">
+            <div class="wrap">
+                <div class="avatar">
+                    <img src="https://picsum.photos/150/150/">
+                </div>
+                <input type="email" id="txtEmail" placeholder="email" required>
+                <div class="bar">
+                    <i></i>
+                </div>
+                <input type="password" id="password" placeholder="password" required>
+                <button id="btnLogin">Se connecter</button>
+                <button id="btnSignUp">S'inscrire</button>
+            </div>
+        </section>
+
+        <section id="section-profil">
+            <h1 class="profil">Profil</h1>
+            <div class="wrap">
+                <form>
+                    <input type="text" id="addName" placeholder="Prénom">
+                    <button id="add">Ajouter</button>
+                </form>
+            </div>
+>>>>>>> 218e5c9c8c922eaab84db5a56d99956479ce0c05
+
+            <div class="wrap">
+                <button id="btnLogout">Se deconnecter</button> 
+            </div>
+        </section>
+    </main>
+
+    <footer role="contentinfo">
+    
+    </footer>
+    
 
 
-
-    <script src="js/scripts.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.0.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.6.1/firebase-auth.js"></script>
+    <script>
+           
+    </script>
+     <script src="js/scripts.js"></script>
+     <script src="js/spa.js"></script>
 </body>
 </html>
