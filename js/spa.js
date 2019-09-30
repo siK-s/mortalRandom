@@ -5,29 +5,11 @@
 /**************************************************/
 function affichagePage1() {
     document.querySelector("#section-accueil").style.display = "";  
-    document.querySelector("#section-connexion").style.display = "none";
-    document.querySelector("#section-inscription").style.display = "none";
     document.querySelector('#section-profil').style.display = "none";
 }
 
 function affichagePage2() {
     document.querySelector("#section-accueil").style.display = "none";
-    document.querySelector("#section-connexion").style.display = "";
-    document.querySelector("#section-inscription").style.display = "none";
-    document.querySelector('#section-profil').style.display = "none";
-}
-
-function affichagePage3() {
-    document.querySelector("#section-accueil").style.display = "none";
-    document.querySelector("#section-connexion").style.display = "none";
-    document.querySelector("#section-inscription").style.display = "";
-    document.querySelector('#section-profil').style.display = "none";
-}
-
-function affichagePage4() {
-    document.querySelector("#section-accueil").style.display = "none";
-    document.querySelector("#section-connexion").style.display = "none";
-    document.querySelector("#section-inscription").style.display = "none";
     document.querySelector('#section-profil').style.display = "";
 }
 

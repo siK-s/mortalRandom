@@ -4,6 +4,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>mortalRandom</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
@@ -16,31 +18,32 @@
 
     <main role="main">
         <section id="section-accueil">
-            <input type="button" onclick="affichagePage2()" value="Connexion"></input>
-            <input type="button" onclick="affichagePage3()" value="Inscription"></input>
-            <input type="button" onclick="affichagePage4()" value="Profil"></input>
-            <h1>Accueil</h1>
+            <div class="wrap">
+                <div class="avatar">
+                    <img src="https://picsum.photos/150/150/">
+                </div>
+                <input type="email" id="txtEmail" placeholder="email" required>
+                <div class="bar">
+                    <i></i>
+                </div>
+                <input type="password" id="password" placeholder="password" required>
+                <button id="btnLogin">Se connecter</button>
+                <button id="btnSignUp">S'inscrire</button>
+            </div>
         </section>
 
-        <section id="section-connexion">
-            <input type="button" onclick="affichagePage1()" value="Accueil"></input>
-            <input type="button" onclick="affichagePage3()" value="Inscription"></input>
-            <input type="button" onclick="affichagePage4()" value="Profil"></input>
-            <h1>Connexion</h1>
-        </section>
-        
-        <section id="section-inscription">
-            <input type="button" onclick="affichagePage1()" value="Accueil"></input>
-            <input type="button" onclick="affichagePage2()" value="Connexion"></input>
-            <input type="button" onclick="affichagePage4()" value="Profil"></input>
-            <h1>Inscription</h1>
-        </section>
-        
         <section id="section-profil">
-            <input type="button" onclick="affichagePage1()" value="Accueil"></input>
-            <input type="button" onclick="affichagePage2()" value="Connexion"></input>
-            <input type="button" onclick="affichagePage3()" value="Inscription"></input>
-            <h1>Profil</h1>
+            <h1 class="profil">Profil</h1>
+            <div class="wrap">
+                <form>
+                    <input type="text" id="addName" placeholder="Prénom">
+                    <button id="add">Ajouter</button>
+                </form>
+            </div>
+
+            <div class="wrap">
+                <button id="btnLogout">Se deconnecter</button> 
+            </div>
         </section>
     </main>
 
@@ -49,10 +52,14 @@
     </footer>
     
 
-    <script src="js/scripts.js"></script>
-    <script src="js/spa.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/7.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.0.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.6.1/firebase-auth.js"></script>
     <script>
-        affichagePage1();
+           
     </script>
+     <script src="js/scripts.js"></script>
+     <script src="js/spa.js"></script>
 </body>
 </html>
