@@ -92,9 +92,11 @@ input#nbEleves[type='text'] { width: 30%; }
     align-items: center;
     color: #FFF;
     transition: all .5s;
+    font-size: 3em;
 }
 #result input[type='submit'] {
     margin: 3em auto;
     color: cornflowerblue; 
     background-color: #FFF;
+    font-size: 1rem;
 }

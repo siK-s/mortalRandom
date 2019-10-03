@@ -81,34 +81,39 @@ function saveNbEleves(e) {
 }
 
 function modifyNbEleves(e) {
-    let nbEleves = document.querySelectorAll('input').length;
-    //console.log(nbEleves);
-    for (let el = 0; el < nbEleves.length; el++) {
+    let nStudiants = document.querySelectorAll('input').length;
+    //console.log(nStudiants);
+    for (let el = 0; el < nStudiants.length; el++) {
         let name = nbEleves[el].value
         if (name !== "") {
             nbEleves[el].value = name;
         }
     }
-    nbEleves = nbEleves - 3; // On supprime les input qui correspondent au type submit
+    nStudiants = nStudiants - 3; // On supprime les input qui correspondent au type submit
     let newNbEleves = Number(document.getElementById('nbEleves').value);
     let nbModify;
-    // console.log(nbEleves);
+    // console.log(nStudiants);
     // console.log(newNbEleves); 
-    if (nbEleves === newNbEleves) {
+    if (nStudiants === newNbEleves) {
         console.log('On ne fait rien');
-    } else if (nbEleves > newNbEleves) {
-        nbModify = nbEleves - newNbEleves;
+    } else if (nStudiants > newNbEleves) {
+        nbModify = nStudiants - newNbEleves;
         console.log('Supprimer', nbModify, 'input');
         let studiantFieldsetElt = document.getElementById('studiantFieldsetElt');
         for (let s = 0; s < nbModify; s++) {
-            studiantFieldsetElt.removeChild(studiantFieldsetElt.childNodes[nbEleves-s]);
+            studiantFieldsetElt.removeChild(studiantFieldsetElt.childNodes[nStudiants-s]);
         }
     } else {
-        nbModify = newNbEleves - nbEleves;
-        console.log('Ajouter', nbModify, 'input');
-        for (let a = 0; a < nbModify; a++) {
-            let inputElt = createInput('input', 'text', "Nom de l'élève");
-            document.getElementById('studiantFieldsetElt').appendChild(inputElt);
+        nbModify = newNbEleves - nStudiants;
+        if (newNbEleves >= 11) {
+            //console.log("Vous pouvez saisir un nombre maximal de 10 élèves");
+            alert("Vous ne pouvez pas saisir plus de 10 élèves !");
+        } else {
+            console.log('Ajouter', nbModify, 'input');
+            for (let a = 0; a < nbModify; a++) {
+                let inputElt = createInput('input', 'text', "Nom de l'élève");
+                document.getElementById('studiantFieldsetElt').appendChild(inputElt);
+            }
         }
     }
     btnRegisterName.style.display = 'inline-block';//on masque le bouoton d'enregistrement des noms
@@ -121,10 +126,8 @@ function modifyNbEleves(e) {
 // Tableau initial
 let uncalledNames = [];
 // Déclaration de la variable de séléction du nom d'un éléève
-let btnSelectName;
-
-// la variable result permet de selectionner la balise qui affichera le nom de l'élève selectionné
-let result = document.getElementById('result');
+let btnSelectName = createInput('input', 'submit', 'Sélectionner un nom');
+btnSelectName.id = 'btnSelectName';
 
 function regisrerNames(e) {
     
@@ -157,9 +160,7 @@ function regisrerNames(e) {
         result.style.top = '0';
         result.style.backgroundColor = 'cornflowerblue';
 
-        //Création et ajout du bouton de sélection des noms
-        btnSelectName = createInput('input', 'submit', 'Sélectionner un nom');
-        btnSelectName.id = 'btnSelectName';
+        // Ajout du bouton de sélection des noms
         document.getElementById('result').appendChild(btnSelectName);
         document.getElementById('btnSelectName').addEventListener('click', decrementNbEleves);
         
@@ -170,23 +171,25 @@ function regisrerNames(e) {
     e.preventDefault(); // Annulation de l'envoi des données
 }
 
-function decrementNbEleves(e) {
-    
-    nbEleves = uncalledNames.length - .01;
-    console.log(nbEleves);
-    if(nbEleves > 0) {
-        console.log(uncalledNames, "Avant d'avoir été appelé");
-        const index = findIndex(nbEleves);
-        console.log(index, "index de l'élève qui a été séléctionné");
-        console.log(uncalledNames[index], "Nom de l'élève selectionné");
-        
-        // Affichage du nom de l'élève dans la balise <p>
-        result.textContent = uncalledNames[index];
-        changeColor();
+// la variable result permet de selectionner la balise qui affichera le nom de l'élève selectionné
+let result = document.getElementById('result');
+let intervalId = null;
 
+function compter(){
+    if (result.textContent > 0) {
+        result.textContent -= 1;
+    } else {
+        nbEleves = uncalledNames.length - .01;
+        const index = findIndex(nbEleves);
+        
+        // Annule l'exécution répétée
+        clearInterval(intervalId);
+
+        // Affichage du nom de l'élève dans la balise
+        result.textContent = uncalledNames[index];
         // supression du nom de cet élève dans le tableau initial
         uncalledNames.splice(index, 1);
-        //console.log(uncalledNames, "Après avoir été appelé");
+        
         nbEleves--;
 
         //Création et ajout du bouton de sélection des noms
@@ -194,6 +197,18 @@ function decrementNbEleves(e) {
         btnSelectName.id = 'btnSelectName';
         document.getElementById('result').appendChild(btnSelectName);
         document.getElementById('btnSelectName').addEventListener('click', decrementNbEleves);
+    }
+}
+
+function decrementNbEleves(e) {
+    
+    if(nbEleves > 0) {
+        // initialisation du compte à rebour à 3
+        result.textContent = 3;
+        // Appelle la fonction compter() pour le compte à rebour
+        intervalId = setInterval(compter, 1000);
+        // Appel de la fonction qui change la couleur de fond
+        changeColor();
     } else {
         alert("Tous les élèves ont été appelé au moins une fois!");
     }
