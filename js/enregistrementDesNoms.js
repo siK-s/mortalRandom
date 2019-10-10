@@ -1,6 +1,8 @@
 // La variable 'registerStudiants' permet d'accéder à la balise <form> dont l'id est 'registerStudiants'
 let registerStudiants = document.getElementById('registerStudiants');
 
+
+
 // Fonction de création d'input
 function createInput(elt, typ, txt) {
     let element = document.createElement(elt);
@@ -8,6 +10,7 @@ function createInput(elt, typ, txt) {
     switch (typ) {
         case 'text':
             element.placeholder = txt;
+            element.classList.add('studiant');
             break;
         case 'submit':
             element.value = txt;
@@ -18,7 +21,6 @@ function createInput(elt, typ, txt) {
     }
     return element;
 }
-
 /*************************************************************************************************** */
 const colorTab = ["#4263eb", "#1c7ed6", "#5c7cfa", "#339af0", '#7048e8', '#5f3dc4'];
 let maxIndexColor = colorTab.length - .01;
@@ -35,17 +37,29 @@ function getRandomArbitrary(min, max) { return Math.random()*(max - min) + min; 
 function findIndex(n) { return Math.floor(getRandomArbitrary(0, n)); }
 
 let saveBtn = document.getElementById('saveBtn'); // bouton qui permet d'enregistrer le nombre d'élèves
-saveBtn.addEventListener('click', saveNbEleves);
+if(saveBtn) {
+    saveBtn.addEventListener('click', saveNbEleves);
+}
+
 
 let nbEleves;
 let btnRegisterName; // bouton d'enregistrement des noms
 let fieldsetElt; // déclaration de la variable de création du fieldset qui regroupera les champs de saisi des noms
-let formRegisterStudiants = document.createElement('form'); // Fromulaire d'enregistrement des étudiants
-formRegisterStudiants.id = 'formRegisterStudiants';
-document.querySelector('main').appendChild(formRegisterStudiants);
 let modifyBtn;
+// let formRegisterStudiants = document.createElement('form'); // Fromulaire d'enregistrement des étudiants
+// formRegisterStudiants.id = 'formRegisterStudiants';
+// document.querySelector('main').appendChild(formRegisterStudiants);
+
+
+
+
+
+
+
+
+
 function saveNbEleves(e) {
-    /************************************************* */
+    /**************************************************/
     nbEleves = document.getElementById('nbEleves').value;
     if ((nbEleves > 0) && (nbEleves <=10)) {
         modifyBtn = createInput('input', 'submit', "Modifier");
@@ -81,7 +95,8 @@ function saveNbEleves(e) {
 }
 
 function modifyNbEleves(e) {
-    let nStudiants = document.querySelectorAll('input').length;
+    let nStudiants = document.querySelectorAll('input[type="text"').length;
+   
     //console.log(nStudiants);
     for (let el = 0; el < nStudiants.length; el++) {
         let name = nbEleves[el].value
@@ -89,7 +104,7 @@ function modifyNbEleves(e) {
             nbEleves[el].value = name;
         }
     }
-    nStudiants = nStudiants - 3; // On supprime les input qui correspondent au type submit
+    nStudiants = nStudiants - 1; // On supprime les input qui correspondent au type submit
     let newNbEleves = Number(document.getElementById('nbEleves').value);
     let nbModify;
     // console.log(nStudiants);
@@ -103,6 +118,7 @@ function modifyNbEleves(e) {
         for (let s = 0; s < nbModify; s++) {
             studiantFieldsetElt.removeChild(studiantFieldsetElt.childNodes[nStudiants-s]);
         }
+    
     } else {
         nbModify = newNbEleves - nStudiants;
         if (newNbEleves >= 11) {
@@ -117,11 +133,9 @@ function modifyNbEleves(e) {
         }
     }
     btnRegisterName.style.display = 'inline-block';//on masque le bouoton d'enregistrement des noms
-    if (btnSelectName) {
-        btnSelectName.style.display = 'none';
-    }
+    
 
-    e.preventDefault(); // Annulation de l'envoi des données
+   e.preventDefault(); // Annulation de l'envoi des données
 }
 // Tableau initial
 let uncalledNames = [];
@@ -130,12 +144,11 @@ let btnSelectName = createInput('input', 'submit', 'Sélectionner un nom');
 btnSelectName.id = 'btnSelectName';
 
 function regisrerNames(e) {
-    
     let countValidInput = 0; // variable qui permet de vérifier si les champs sont rempli
     // La variable names permettra de séléctionner tous les champs (input) contenant le nom des éléèves
     let names = document.querySelectorAll('fieldset input[type=text]');
     
-    //On verifie si les champs ne sont pas vide
+    //On verifie si les champs ne sont pas vide && on cree
     for (let i = 0; i < names.length; i++) {
         if (names[i].value != "")
             countValidInput ++;
@@ -163,7 +176,14 @@ function regisrerNames(e) {
         // Ajout du bouton de sélection des noms
         document.getElementById('result').appendChild(btnSelectName);
         document.getElementById('btnSelectName').addEventListener('click', decrementNbEleves);
+
+   
+        db.collection('users').doc(getCurrentUserId()).set({
+            names: uncalledNames
+        });
         
+       
+
     } else {
         alert("Tous les champs doivent être remplis!")
     }
@@ -176,7 +196,7 @@ let result = document.getElementById('result');
 let intervalId = null;
 
 function compter(){
-    if (result.textContent > 0) {
+    if (result.textContent > 1) {
         result.textContent -= 1;
     } else {
         nbEleves = uncalledNames.length - .01;
@@ -211,7 +231,7 @@ function decrementNbEleves(e) {
         changeColor();
     } else {
         alert("Tous les élèves ont été appelé au moins une fois!");
+        
     }
-
     e.preventDefault(); // Annulation de l'envoi des données
 }
