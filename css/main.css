@@ -73,7 +73,7 @@ input[type='text'] {
     text-align: left;
 }
 input#nbEleves[type='text'] { 
-    width: 250px; 
+    width: 50%; 
     margin-top: 1em;
     text-align: center;
 }
