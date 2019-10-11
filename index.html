@@ -4,64 +4,74 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>mortalRandom</title>
-    <link rel="stylesheet" href="css/reset.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Condensed&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- <link rel="stylesheet" href="css/reset.css"> -->
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
-
-
-    <header role="banner">
-        <nav role="navigation">
-
-        </nav>
+    <header role="" id="section-header">
+        <div class="iconlogo">
+            <img src="img/random-logo-icon-black-and-white.png" alt="">
+        </div>
+        <h1><b>Mortal</b> Random</h1>
     </header>
 
-<!-- numéro du compte à rebours de départ
-<div id="numdep">3</div>
-<div id="noms"></div> -->
     <main role="main">
         <section id="section-accueil">
             <div class="wrap">
                 <div class="avatar">
                     <img src="https://picsum.photos/150/150/">
                 </div>
-                <input type="email" id="txtEmail" placeholder="email" required>
+                <input type="email" id="txtEmail" placeholder="Votre email" required>
                 <div class="bar">
                     <i></i>
                 </div>
-                <input type="password" id="password" placeholder="password" required>
+                <input type="password" id="password" placeholder="Votre mot de passe" required>
                 <button id="btnLogin">Se connecter</button>
                 <button id="btnSignUp">S'inscrire</button>
+                <div id="error">
+                   <p>Error !!</p>
+                </div>
             </div>
         </section>
 
         <section id="section-profil">
-            <h1 class="profil">Profil</h1>
-            <div class="wrap">
-                <form>
-                    <input type="text" id="addName" placeholder="Prénom">
-                    <button id="add">Ajouter</button>
+            <header>
+                <div class="wrap">
+                    <button id="btnLogout">Déconnexion</button>
+                </div>
+                <ul>
+                    <li class="title">Liste des noms enregistrés</li>
+                </ul>
+            </header>
+            <main>
+                <form class="registerStudiantsSize" id="registerStudiants" action="">
+                    <fieldset class="registerNumStudiants">
+                        <label for="nbEleves">Veuillez saisir le nombre d'élèves</label>
+                        <p id="errorNbEleves"></p>
+                        <input id="nbEleves" type="text" placeholder="Nombre d'élève">
+                        <div><button id="saveBtn">Valider</button></div>
+                    </fieldset>
                 </form>
             </div>
             <div class="wrap">
                 <button id="btnLogout">Se deconnecter</button> 
             </div>
+                <!-- <form id="formRegisterStudiants"></form> -->
+                <div id="result"></div>
+            </main>
         </section>
     </main>
 
-    <footer role="contentinfo">
     
-    </footer>
-    
-
-
     <script src="https://www.gstatic.com/firebasejs/7.0.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.0.0/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.6.1/firebase-auth.js"></script>
-    <script>
-           
-    </script>
-     <script src="js/scripts.js"></script>
-     <script src="js/spa.js"></script>
+    <script src="js/spa.js"></script>
+    <script src="js/scripts.js"></script>
+    <script src="js/enregistrementDesNoms.js"></script>
+   
 </body>
 </html>

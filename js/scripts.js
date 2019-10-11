@@ -19,9 +19,9 @@ const btnSign = document.getElementById('btnSignUp');
 const btnLogout = document.getElementById('btnLogout');
 const form = document.querySelector('form');
 
-
 const accueil = document.getElementById('section-accueil');
 const profil = document.getElementById('section-profil');
+
 
 profil.style.display = "none";
 
@@ -33,44 +33,84 @@ btnLogin.addEventListener('click', () => {
    const auth = firebase.auth();
 
    const promise = auth.signInWithEmailAndPassword(email , pass);
-   promise.catch(e => console.log(e.message));
+   promise.catch(e => {
+        document.getElementById('error').style.display = "block"
+        document.getElementById('error').innerHTML = e.message
+        setTimeout(function() {
+            document.getElementById('error').style.display = "none"
+        },2000);
+   });
+   
 });
+
 
 btnSign.addEventListener('click', () => {
     const email = txtEmail.value;
     const pass = txtPassword.value;
     const auth = firebase.auth();
     const promise = auth.createUserWithEmailAndPassword(email , pass);
-    promise.catch(e => console.log(e.message));
-    accueil.style.display = "none";
-    profil.style.display = "";
-
-})
-
-btnLogout.addEventListener('click', () => {
-    firebase.auth().signOut().then(() => {
-        console.log("Deconnexion reussie !");
-        accueil.style.display = "";
-        profil.style.display = "none";
-    }).catch(() => {
-        console.log("une erreur est survenue");
+    promise.catch(e => {
+        console.log(e.message)
+        document.getElementById('error').style.display = "block"
+        document.getElementById('error').innerHTML = e.message
+        setTimeout(function() {
+            document.getElementById('error').style.display = "none"
+        },2000);
     });
 })
 
+
+
+if(btnLogout) {
+    btnLogout.addEventListener('click', () => {
+        firebase.auth().signOut().then(() => {
+            console.log("Deconnexion reussie !");
+            accueil.style.display = "";
+            profil.style.display = "none";
+        }).catch(() => {
+            console.log("une erreur est survenue");
+        });
+    })
+}
+
+const list = document.querySelector('ul');
+
+
 firebase.auth().onAuthStateChanged(firebaseUser => {
     if(firebaseUser) {
-        console.log(firebaseUser.uid);
-        console.log(firebaseUser);
-        db.collection('users').doc(getCurrentUserId()).set({
-            names: []
-        });
-        accueil.style.display = "none";
-        profil.style.display = "";  
+        const userId = getCurrentUserId();
+        db.collection('users').doc(getCurrentUserId()).get().then(doc => {
+            user = doc.data();
+            let result = user.names;
+            result.forEach(elem => {
+                list.innerHTML += `
+                <li>
+                 ${elem}
+                </li>`
+            });
+            if (!user) {
+            db.collection('users').doc(userId).set({
+                names: []
+                });
+            }
+        })
+    accueil.style.display = "none";
+    profil.style.display = "";  
     } 
 });
 
-const getCurrentUserId = () => firebase.auth().currentUser.uid;
+/*
+db.collection('users').doc(getCurrentUserId()).get().then((namesStud) => {
+    namesStud.docs.forEach(name => {
+        addElem(name.data())
+    });
+}).catch((err) => {
+   console.log("Error")
+})
+*/
 
+
+const getCurrentUserId = () => firebase.auth().currentUser.uid;
 
 form.addEventListener('submit', e => {
     e.preventDefault();
@@ -86,5 +126,12 @@ form.addEventListener('submit', e => {
 })
 
 
-// firebase.firestore.FieldValue.arrayRemove(Suppression d'un élément du tableau)
 
+
+
+   
+
+
+
+
+ 

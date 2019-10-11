@@ -1,6 +1,6 @@
 body {
     font-family: 'Roboto', sans-serif;
-    background-color: #eee;
+    background-color: cornflowerblue;
     padding: 0;
     margin: 0;
 }
@@ -28,33 +28,52 @@ h1 b {
     font-family: 'Roboto Condensed', sans-serif;
     color: #000;
 }
+/******** Affichage de la liste des noms *********/
+ul {
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    list-style-type: none;
+    color: #FFF;
+}
+ul li.title {
+    text-transform: uppercase; 
+    margin: 1em auto;
+}
 /*** Formulaire */
+input, button {
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    border-radius: 30px;
+    outline: none; 
+    text-align: center;
+}
 #formRegisterStudiants { text-align: center; }
 fieldset {
     border: 0;
     text-align: center;
 }
-fieldset legend {
-    margin: 1.5em auto 1em;
-    text-transform: uppercase;
-}
-#registerStudiants {
-    text-align: center;
-}
+fieldset legend { text-transform: uppercase; }
+#registerStudiants { text-align: center; }
 #registerStudiants fieldset:nth-child(2) input[type='text'],
 #studiantFieldsetElt input[type='text'] {
     width: 90%;
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    border-radius: 30px;
 }
-.registerNumStudiants{
-    margin: 0em auto 1em;
+#studiantFieldsetElt { margin-top: .5em; }
+.registerNumStudiants {
+    margin: 1em auto;
+    padding-bottom: 1.5em;
     transition: all .5s;
     position: relative;
     opacity: 1;
-    background-color: #000;
+    background-color: rgba(0,0, 0, .3);
 }
 .registerNumStudiants label {
     display: block;
-    margin: 1em auto;
+    margin: 1em auto .5em;
     color: #fff;
 }
 input[type='text'] {
@@ -62,27 +81,35 @@ input[type='text'] {
     margin-bottom: 1em;
     padding: 1em;
     border: 0;
-    -webkit-border-radius: 0;
-    -moz-border-radius: 0;
-    border-radius: 0;
     font-size: 1em;
     text-align: left;
 }
-input#nbEleves[type='text'] { width: 30%; }
-#saveBtn { 
-    display: inline-block;
-    cursor: pointer;
+input#nbEleves[type='text'] { 
+    width: 50%; 
+    margin-top: 1em;
+    text-align: center;
 }
 #saveBtn, button, input[type='submit'] {
     padding: 1em;
     margin: 0em auto;
     border: none;
     color: #fff;
-    background-color: cornflowerblue;
-    -webkit-border-radius: 0;
-    -moz-border-radius: 0;
-    border-radius: 0;
     font-size: 1em;
+}
+button, input[type='submit'] {
+    background-color: rgba(0,0, 0, .3);
+    width: 160px;
+}
+#saveBtn, .registerNumStudiants div input[type='submit'] { 
+    display: inline-block;
+    cursor: pointer;
+    background-color: cornflowerblue;
+    width: 250px;
+}
+#formRegisterStudiants input[type='submit'] { width: 250px; }
+#errorNbEleves {
+    color: chartreuse;
+    margin: 0;
 }
 #result {
     width: 100%;
@@ -92,9 +119,12 @@ input#nbEleves[type='text'] { width: 30%; }
     align-items: center;
     color: #FFF;
     transition: all .5s;
+    font-size: 3em;
 }
 #result input[type='submit'] {
     margin: 3em auto;
     color: cornflowerblue; 
     background-color: #FFF;
+    font-size: 1rem;
+    width: 250px;
 }

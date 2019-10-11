@@ -13,4 +13,10 @@ function affichagePage2() {
     document.querySelector('#section-profil').style.display = "";
 }
 
+/*
+function affichagePage3() {
+    document.querySelector("#section-accueil").style.display = "none";
+    document.querySelector('#section-profil').style.display = "";
+}*/
+
 affichagePage1() // Affichage de la page numéro 1

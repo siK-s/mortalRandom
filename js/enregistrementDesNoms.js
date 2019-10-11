@@ -8,6 +8,7 @@ function createInput(elt, typ, txt) {
     switch (typ) {
         case 'text':
             element.placeholder = txt;
+            element.classList.add('studiant');
             break;
         case 'submit':
             element.value = txt;
@@ -18,38 +19,39 @@ function createInput(elt, typ, txt) {
     }
     return element;
 }
+/*************************************************************************************************** */ 
+
+/* Un random de 0 à 2 nous donne des index de 0, 1, 2, cad, 3 chiffres pour un tableau de 2 élements), on utilise la fonction math.floor pour éviter de tomber sur le numéro max */
+function findIndex(n) { return Math.floor(Math.random() * n); }
 
 /*************************************************************************************************** */
 const colorTab = ["#4263eb", "#1c7ed6", "#5c7cfa", "#339af0", '#7048e8', '#5f3dc4'];
-let maxIndexColor = colorTab.length - .01;
 function changeColor() {
-    let indexColor = findIndex(maxIndexColor);
+    let indexColor = findIndex(colorTab.length);
     result.style.backgroundColor = colorTab[indexColor];
-    //console.log(indexColor);
 }
-/*************************************************************************************************** */ 
 
-// fonction qui permet de selectionner un nombre aléatoire qui correspond à un index du tableau
-function getRandomArbitrary(min, max) { return Math.random()*(max - min) + min; }
-/* Un random de 0 à 2 nous donne des index de 0, 1, 2, cad, 3 chiffres pour un tableau de 2 élements), on réduit le nombre maximun de 0.01 pour éviter d'avoir un index de trop lors de la sélection de l'index de l'élève, et, avec la méthode Math.floor, on arrondit ce nombre max à la valeur inférieur */
-function findIndex(n) { return Math.floor(getRandomArbitrary(0, n)); }
+/*************************************************************************************************** */
 
 let saveBtn = document.getElementById('saveBtn'); // bouton qui permet d'enregistrer le nombre d'élèves
-saveBtn.addEventListener('click', saveNbEleves);
+if(saveBtn) {
+    saveBtn.addEventListener('click', saveNbEleves);
+}
 
 let nbEleves;
 let btnRegisterName; // bouton d'enregistrement des noms
 let fieldsetElt; // déclaration de la variable de création du fieldset qui regroupera les champs de saisi des noms
+let modifyBtn;
 let formRegisterStudiants = document.createElement('form'); // Fromulaire d'enregistrement des étudiants
 formRegisterStudiants.id = 'formRegisterStudiants';
 document.querySelector('main').appendChild(formRegisterStudiants);
-let modifyBtn;
+
 function saveNbEleves(e) {
     /************************************************* */
     nbEleves = document.getElementById('nbEleves').value;
     if ((nbEleves > 0) && (nbEleves <=10)) {
         modifyBtn = createInput('input', 'submit', "Modifier");
-        document.querySelector('.registerNumStudiants').replaceChild(modifyBtn, saveBtn);
+        document.querySelector('.registerNumStudiants div').replaceChild(modifyBtn, saveBtn);
         modifyBtn.addEventListener('click', modifyNbEleves);
         //console.log(nbEleves, 'save nb élèves');
         fieldsetElt = document.createElement('fieldset'); // Création d'un conteneur qui regroupe les input d'enregistrement des noms
@@ -58,6 +60,10 @@ function saveNbEleves(e) {
         let legendElt = document.createElement('legend');// creation de la balise legend
         legendElt.textContent = "Nom des élèves";
         fieldsetElt.appendChild(legendElt); // ajout de la légende dans la balise fieldset
+        let errorFormRegisterStudiants = document.createElement('p');
+        errorFormRegisterStudiants.style.color = 'chartreuse';
+        errorFormRegisterStudiants.id = 'errorFormRegisterStudiants';
+        fieldsetElt.appendChild(errorFormRegisterStudiants);
 
         // Création et ajout des champs de saisi des noms des élèves
         for (let i = 0; i < nbEleves; i++) {
@@ -68,63 +74,66 @@ function saveNbEleves(e) {
         btnRegisterName = createInput('input', 'submit', 'Enregistrer');
         btnRegisterName.id = 'btnRegisterName';
         document.getElementById('formRegisterStudiants').appendChild(btnRegisterName);
-        document.getElementById('btnRegisterName').addEventListener('click', regisrerNames);
+        btnRegisterName.addEventListener('click', regisrerNames);
     } else if (nbEleves >= 10) {
         //console.log("Vous pouvez saisir un nombre maximal de 10 élèves");
-        alert("Vous ne pouvez pas saisir plus de 10 élèves !");
-        nbEleves = 9.99;
+        //alert("Vous ne pouvez pas saisir plus de 10 élèves !");
+        document.getElementById('errorNbEleves').textContent = "Vous ne pouvez pas saisir plus de 10 élèves !";
     } else {
-        alert("Merci de saisir un nombre d'élève");
+        //alert("Merci de saisir un nombre d'élève");
+        document.getElementById('errorNbEleves').textContent = "Merci de saisir un nombre d'élèves valide !";
     }
 
     e.preventDefault(); // Annulation de l'envoi des données
 }
 
 function modifyNbEleves(e) {
-    let nbEleves = document.querySelectorAll('input').length;
-    //console.log(nbEleves);
-    for (let el = 0; el < nbEleves.length; el++) {
+    let nStudiants = document.querySelectorAll("input[type='text").length;
+    //console.log(nStudiants);
+    for (let el = 0; el < nStudiants.length; el++) {
         let name = nbEleves[el].value
         if (name !== "") {
             nbEleves[el].value = name;
         }
     }
-    nbEleves = nbEleves - 3; // On supprime les input qui correspondent au type submit
+    nStudiants = nStudiants - 1; // On supprime les input qui correspondent au type submit
     let newNbEleves = Number(document.getElementById('nbEleves').value);
     let nbModify;
-    // console.log(nbEleves);
+    // console.log(nStudiants);
     // console.log(newNbEleves); 
-    if (nbEleves === newNbEleves) {
-        console.log('On ne fait rien');
-    } else if (nbEleves > newNbEleves) {
-        nbModify = nbEleves - newNbEleves;
-        console.log('Supprimer', nbModify, 'input');
-        let studiantFieldsetElt = document.getElementById('studiantFieldsetElt');
-        for (let s = 0; s < nbModify; s++) {
-            studiantFieldsetElt.removeChild(studiantFieldsetElt.childNodes[nbEleves-s]);
-        }
-    } else {
-        nbModify = newNbEleves - nbEleves;
-        console.log('Ajouter', nbModify, 'input');
-        for (let a = 0; a < nbModify; a++) {
-            let inputElt = createInput('input', 'text', "Nom de l'élève");
-            document.getElementById('studiantFieldsetElt').appendChild(inputElt);
+    if (nStudiants !== newNbEleves) {
+        if (nStudiants > newNbEleves) {
+            nbModify = nStudiants - newNbEleves;
+            //console.log('Supprimer', nbModify, 'input');
+            let studiantFieldsetElt = document.getElementById('studiantFieldsetElt');
+            for (let s = 0; s < nbModify; s++) {
+                studiantFieldsetElt.removeChild(studiantFieldsetElt.childNodes[nStudiants-s]);
+            }
+        } else {
+            nbModify = newNbEleves - nStudiants;
+            if (newNbEleves >= 11) {
+                // console.log("Vous pouvez saisir un nombre maximal de 10 élèves");
+                // alert("Vous ne pouvez pas saisir plus de 10 élèves !");
+                document.getElementById('errorNbEleves').textContent = "Vous ne pouvez pas saisir plus de 10 élèves !";
+            } else {
+                //console.log('Ajouter', nbModify, 'input');
+                for (let a = 0; a < nbModify; a++) {
+                    let inputElt = createInput('input', 'text', "Nom de l'élève");
+                    document.getElementById('studiantFieldsetElt').appendChild(inputElt);
+                }
+            }
         }
     }
     btnRegisterName.style.display = 'inline-block';//on masque le bouoton d'enregistrement des noms
-    if (btnSelectName) {
-        btnSelectName.style.display = 'none';
-    }
 
-    e.preventDefault(); // Annulation de l'envoi des données
+   e.preventDefault(); // Annulation de l'envoi des données
 }
+
 // Tableau initial
 let uncalledNames = [];
 // Déclaration de la variable de séléction du nom d'un éléève
-let btnSelectName;
-
-// la variable result permet de selectionner la balise qui affichera le nom de l'élève selectionné
-let result = document.getElementById('result');
+let btnSelectName = createInput('input', 'submit', 'Sélectionner un nom');
+btnSelectName.id = 'btnSelectName';
 
 function regisrerNames(e) {
     
@@ -156,33 +165,56 @@ function regisrerNames(e) {
         result.style.height = '100vh';
         result.style.top = '0';
         result.style.backgroundColor = 'cornflowerblue';
+        document.getElementById('formRegisterStudiants').style.display = 'none';
 
-        //Création et ajout du bouton de sélection des noms
-        btnSelectName = createInput('input', 'submit', 'Sélectionner un nom');
-        btnSelectName.id = 'btnSelectName';
+        // Ajout du bouton de sélection des noms
         document.getElementById('result').appendChild(btnSelectName);
         document.getElementById('btnSelectName').addEventListener('click', decrementNbEleves);
-        
+
+   
+        db.collection('users').doc(getCurrentUserId()).set({
+            names: uncalledNames
+        });
+
     } else {
-        alert("Tous les champs doivent être remplis!")
+        //alert("Tous les champs doivent être remplis!");
+        document.getElementById('errorFormRegisterStudiants').textContent = 'Tous les champs doivent être remplis !';
     }
 
     e.preventDefault(); // Annulation de l'envoi des données
 }
 
-function decrementNbEleves(e) {
+// la variable result permet de selectionner la balise qui affichera le nom de l'élève selectionné
+let result = document.getElementById('result');
+let intervalId = null;
+
+// Déclaration du tableau contenant les noms qui ont été appelé
+let calledNames = [];
+let indexColor;
+
+function compter(){
     
-    nbEleves = uncalledNames.length - .01;
-    console.log(nbEleves);
-    if(nbEleves > 0) {
-        console.log(uncalledNames, "Avant d'avoir été appelé");
+    if (result.textContent > 1) {
+        result.textContent -= 1;
+    } else {
+        nbEleves = uncalledNames.length;
+        //console.log(nbEleves);
+        //console.log(uncalledNames, "Avant d'avoir été appelé");
         const index = findIndex(nbEleves);
-        console.log(index, "index de l'élève qui a été séléctionné");
-        console.log(uncalledNames[index], "Nom de l'élève selectionné");
+        //console.log(index, "index de l'élève qui a été séléctionné");
+        //console.log(uncalledNames[index], "Nom de l'élève selectionné");
         
-        // Affichage du nom de l'élève dans la balise <p>
+        // Annule l'exécution répétée
+        clearInterval(intervalId);
+
+        // Affichage du nom de l'élève dans la balise
         result.textContent = uncalledNames[index];
+    
+        // Appel de la fonction qui change la couleur de fond
         changeColor();
+        
+        // insertion du nom séléctionné dans le tableau 'calledNames'
+        calledNames.push(uncalledNames[index]);
 
         // supression du nom de cet élève dans le tableau initial
         uncalledNames.splice(index, 1);
@@ -194,8 +226,36 @@ function decrementNbEleves(e) {
         btnSelectName.id = 'btnSelectName';
         document.getElementById('result').appendChild(btnSelectName);
         document.getElementById('btnSelectName').addEventListener('click', decrementNbEleves);
+    }
+}
+
+function decrementNbEleves(e) {
+    
+    if(nbEleves > 0) {
+        // initialisation du compte à rebour à 3
+        result.textContent = 3;
+        // Appelle la fonction compter() pour le compte à rebour
+        intervalId = setInterval(compter, 1000);
     } else {
-        alert("Tous les élèves ont été appelé au moins une fois!");
+        //alert("Tous les élèves ont été appelé au moins une fois!");
+        let pEltMessage = document.createElement('p');
+        pEltMessage.style.fontSize = '1rem';
+        pEltMessage.style.margin = 0;
+        pEltMessage.style.color = 'cyan';
+        pEltMessage.textContent = 'Tous les élèves ont été appelé au moins une fois !';
+        document.getElementById('result').appendChild(pEltMessage);
+
+        // Une fois que tous les élèves ont été appelé au moins une fois, on re-remplit le tableau 'uncalledNames' avec les noms qui on été appelé...
+        calledNames.forEach(function(name, index) {
+            uncalledNames[index] = name;
+        });
+        //... et on vide le tableau des noms appelés pour recommencer le random...
+        calledNames = [];
+
+        //...puis on réinitialise la valeur du nombre d'élèves pour qu'il ait à nouveau la valeur de la longueur du tableau
+        nbEleves = uncalledNames.length;
+        //console.log(nbEleves);
+        //console.log("Tous les élèves ont été appelé au moins une fois!");
     }
 
     e.preventDefault(); // Annulation de l'envoi des données
