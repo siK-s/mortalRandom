@@ -63,7 +63,7 @@
     border-radius: 30px;
     background-color: cornflowerblue;
     margin-top: .5em;
-    width: 50%;
+    width: 250px;
 }
 #btnLogout {
     width: 250px;
@@ -72,7 +72,9 @@
 }
 #btnSignUp {
     background-color: transparent;
+    display: block;
     height: auto;
+    width: 100%;
     margin: 0;
 }
 .profil {
